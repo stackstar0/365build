@@ -10,14 +10,13 @@ services:
     environment:
       - NODE_ENV=production
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      test: [ "CMD", "curl", "-f", "http://localhost:80" ]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
     networks:
       - blogs-network
-
   # Optional: Add a reverse proxy for SSL termination
   # nginx-proxy:
   #   image: nginx:alpine

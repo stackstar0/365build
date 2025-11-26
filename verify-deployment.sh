@@ -71,12 +71,12 @@ echo
 echo -e "${BLUE}🏗️  Creating production build...${NC}"
 if npm run build; then
     echo -e "${GREEN}✅ Production build successful${NC}"
-    
+
     # Check build directory
     if [ -d "build" ]; then
         BUILD_SIZE=$(du -sh build | cut -f1)
         echo -e "${GREEN}✅ Build directory created (Size: $BUILD_SIZE)${NC}"
-        
+
         # List key build files
         echo -e "${BLUE}📁 Build contents:${NC}"
         ls -la build/static/js/*.js 2>/dev/null | head -3
