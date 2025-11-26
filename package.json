@@ -1,6 +1,7 @@
 {
   "name": "blogs-application",
   "version": "1.0.0",
+  "description": "Modern React TypeScript blogs application with dark theme UI - Production Ready",
   "private": false,
   "homepage": ".",
   "dependencies": {
