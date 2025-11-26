@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  blogs-app:
+    build: .
+    container_name: 365build-blogs
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - blogs-network
+
+  # Optional: Add a reverse proxy for SSL termination
+  # nginx-proxy:
+  #   image: nginx:alpine
+  #   container_name: blogs-proxy
+  #   ports:
+  #     - "443:443"
+  #   volumes:
+  #     - ./ssl:/etc/ssl
+  #     - ./proxy.conf:/etc/nginx/nginx.conf
+  #   depends_on:
+  #     - blogs-app
+  #   networks:
+  #     - blogs-network
+
+networks:
+  blogs-network:
+    driver: bridge
+
+volumes:
+  blogs-data:
+    driver: local
