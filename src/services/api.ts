@@ -14,17 +14,17 @@ class ApiService {
             'Content-Type': 'application/json',
           },
         });
-        
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
         }
-        
+
         const data = await response.json();
         console.log('Successfully fetched data:', data.length || 'single item');
         return data;
       } catch (error) {
         console.error(`API fetch error for URL: ${url} (attempt ${attempt}/${retries})`, error);
-        
+
         if (attempt === retries) {
           // Last attempt failed
           if (error instanceof TypeError) {
@@ -32,7 +32,7 @@ class ApiService {
           }
           throw error;
         }
-        
+
         // Wait before retrying (exponential backoff)
         await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
       }

@@ -72,8 +72,8 @@ const Blogs: React.FC = () => {
           <div className="error">
             <h3>⚠️ Unable to Load Blogs</h3>
             <p>{blogsError}</p>
-            <button 
-              className="retry-button" 
+            <button
+              className="retry-button"
               onClick={() => window.location.reload()}
             >
               🔄 Try Again

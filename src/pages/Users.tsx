@@ -47,8 +47,8 @@ const Users: React.FC = () => {
           <div className="error">
             <h3>⚠️ Unable to Load Users</h3>
             <p>{error}</p>
-            <button 
-              className="retry-button" 
+            <button
+              className="retry-button"
               onClick={() => window.location.reload()}
             >
               🔄 Try Again
