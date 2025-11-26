@@ -4,17 +4,40 @@ import { transformBlogsToEnglish, transformBlogToEnglish } from './contentTransf
 const BASE_URL = 'https://jsonplaceholder.typicode.com';
 
 class ApiService {
-  private async fetchData<T>(url: string): Promise<T> {
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+  private async fetchData<T>(url: string, retries = 3): Promise<T> {
+    for (let attempt = 1; attempt <= retries; attempt++) {
+      try {
+        console.log(`Fetching data from: ${url} (attempt ${attempt}/${retries})`);
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        console.log('Successfully fetched data:', data.length || 'single item');
+        return data;
+      } catch (error) {
+        console.error(`API fetch error for URL: ${url} (attempt ${attempt}/${retries})`, error);
+        
+        if (attempt === retries) {
+          // Last attempt failed
+          if (error instanceof TypeError) {
+            throw new Error('Network error: Please check your internet connection');
+          }
+          throw error;
+        }
+        
+        // Wait before retrying (exponential backoff)
+        await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
       }
-      return await response.json();
-    } catch (error) {
-      console.error('API fetch error:', error);
-      throw error;
     }
+    throw new Error('All retry attempts failed');
   }
 
   // Fetch All Blogs

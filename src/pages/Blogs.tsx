@@ -68,7 +68,26 @@ const Blogs: React.FC = () => {
   if (blogsError) {
     return (
       <div className="blogs-container">
-        <div className="error">Error loading blogs: {blogsError}</div>
+        <div className="error-container">
+          <div className="error">
+            <h3>⚠️ Unable to Load Blogs</h3>
+            <p>{blogsError}</p>
+            <button 
+              className="retry-button" 
+              onClick={() => window.location.reload()}
+            >
+              🔄 Try Again
+            </button>
+          </div>
+          <div className="error-help">
+            <p><strong>Possible solutions:</strong></p>
+            <ul>
+              <li>Check your internet connection</li>
+              <li>Try refreshing the page</li>
+              <li>The API server might be temporarily unavailable</li>
+            </ul>
+          </div>
+        </div>
       </div>
     );
   }

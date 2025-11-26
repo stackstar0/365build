@@ -12,10 +12,15 @@ export const useBlogs = () => {
     const fetchBlogs = async () => {
       try {
         setLoading(true);
+        setError(null); // Clear any previous errors
+        console.log('Starting to fetch blogs...');
         const data = await apiService.getAllBlogs();
+        console.log('Blogs fetched successfully:', data.length);
         setBlogs(data);
       } catch (err) {
-        setError('Failed to fetch blogs');
+        console.error('Error in useBlogs hook:', err);
+        const errorMessage = err instanceof Error ? err.message : 'Failed to fetch blogs';
+        setError(`Error loading blogs: ${errorMessage}`);
       } finally {
         setLoading(false);
       }
@@ -37,10 +42,15 @@ export const useUsers = () => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
+        setError(null); // Clear any previous errors
+        console.log('Starting to fetch users...');
         const data = await apiService.getAllUsers();
+        console.log('Users fetched successfully:', data.length);
         setUsers(data);
       } catch (err) {
-        setError('Failed to fetch users');
+        console.error('Error in useUsers hook:', err);
+        const errorMessage = err instanceof Error ? err.message : 'Failed to fetch users';
+        setError(`Error loading users: ${errorMessage}`);
       } finally {
         setLoading(false);
       }

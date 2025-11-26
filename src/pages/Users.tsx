@@ -43,7 +43,26 @@ const Users: React.FC = () => {
   if (error) {
     return (
       <div className="users-container">
-        <div className="error">Error loading users: {error}</div>
+        <div className="error-container">
+          <div className="error">
+            <h3>⚠️ Unable to Load Users</h3>
+            <p>{error}</p>
+            <button 
+              className="retry-button" 
+              onClick={() => window.location.reload()}
+            >
+              🔄 Try Again
+            </button>
+          </div>
+          <div className="error-help">
+            <p><strong>Possible solutions:</strong></p>
+            <ul>
+              <li>Check your internet connection</li>
+              <li>Try refreshing the page</li>
+              <li>The API server might be temporarily unavailable</li>
+            </ul>
+          </div>
+        </div>
       </div>
     );
   }
