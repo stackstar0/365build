@@ -133,14 +133,31 @@ const Search: React.FC = () => {
 
       <div className="search-controls">
         <div className="search-input-section">
-          <input
-            type="text"
-            placeholder="Search for blogs, users, topics..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="search-input"
-            autoFocus
-          />
+          <div className="search-input-wrapper">
+            <input
+              type="text"
+              placeholder="Search for blogs, users, topics..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="search-input"
+              autoFocus
+            />
+            {searchQuery && (
+              <button
+                className="clear-search-button"
+                onClick={() => setSearchQuery('')}
+                title="Clear search"
+              >
+                ✕
+              </button>
+            )}
+            <div className="search-icon">🔍</div>
+          </div>
+          {searchQuery && (
+            <div className="search-status">
+              Searching for "{searchQuery}" in {searchType === 'all' ? 'all content' : searchType}
+            </div>
+          )}
         </div>
 
         <div className="search-filters">
