@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Blogs App",
+  "name": "Modern Blogs Application",
+  "description": "A comprehensive React TypeScript application for viewing and managing blogs and users",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +21,14 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#ff7f50",
+  "background_color": "#1a1a2e",
+  "categories": [
+    "productivity",
+    "social",
+    "news"
+  ],
+  "lang": "en",
+  "dir": "ltr",
+  "orientation": "any"
 }

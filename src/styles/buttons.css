@@ -1,0 +1,158 @@
+/* Enhanced Button Styles for Better Interactivity */
+
+/* Button hover effects */
+@keyframes buttonPulse {
+  0% {
+    box-shadow: 0 4px 15px rgba(255, 127, 80, 0.3);
+  }
+  50% {
+    box-shadow: 0 8px 25px rgba(255, 127, 80, 0.5);
+  }
+  100% {
+    box-shadow: 0 4px 15px rgba(255, 127, 80, 0.3);
+  }
+}
+
+@keyframes buttonRipple {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Interactive button class */
+.interactive-btn {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+}
+
+.interactive-btn:focus {
+  outline: none;
+  animation: buttonPulse 1.5s infinite;
+}
+
+.interactive-btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* Ripple effect */
+.interactive-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+}
+
+.interactive-btn:active::after {
+  width: 300px;
+  height: 300px;
+  animation: buttonRipple 0.6s linear;
+}
+
+/* Loading state for buttons */
+.btn-loading {
+  pointer-events: none;
+  opacity: 0.7;
+  position: relative;
+}
+
+.btn-loading::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Disabled button state */
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn:disabled:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Button group styles */
+.btn-group {
+  display: inline-flex;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-group .btn {
+  border-radius: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-group .btn:first-child {
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+}
+
+.btn-group .btn:last-child {
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  border-right: none;
+}
+
+/* Icon button styles */
+.btn-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Floating action button */
+.btn-floating {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  box-shadow: 0 8px 25px rgba(255, 127, 80, 0.4);
+}
+
+.btn-floating:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 12px 35px rgba(255, 127, 80, 0.5);
+}
