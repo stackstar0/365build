@@ -36,21 +36,25 @@ const Home: React.FC = () => {
         </div>
       </div>
 
-      <div className="info-section">
-        <h2>The Application and The Assignment</h2>
-        <div className="assignment-info">
-          <h3>Assignment</h3>
-          <p>Go through this application in detail, understand what has been done</p>
-          <p>Try to build, as much of this application as possible</p>
-          <p>You can try to build same, less or more features</p>
-          <ul>
-            <li>You are free to use any tech/platform/language</li>
-            <li>You are free to build a) webapp or b) mobile app or c) desktop app</li>
-            <li>You can build SPA (react, vue etc...) or SSR (spring boot etc)</li>
-          </ul>
-
-          <h4>Bonus Points</h4>
-          <p>Search & Sort Functions in Blogs and Users Page</p>
+      <div className="features-section">
+        <h2>Application Features</h2>
+        <div className="features-grid">
+          <div className="feature-card">
+            <h3>🔍 Advanced Search</h3>
+            <p>Search across blogs and users with real-time filtering and smart matching</p>
+          </div>
+          <div className="feature-card">
+            <h3>📊 Smart Sorting</h3>
+            <p>Sort content by title, author, date, or relevance with ascending/descending options</p>
+          </div>
+          <div className="feature-card">
+            <h3>📱 Responsive Design</h3>
+            <p>Optimized for all devices with modern glass morphism UI and smooth animations</p>
+          </div>
+          <div className="feature-card">
+            <h3>⚡ Performance</h3>
+            <p>Fast loading with optimized bundles, caching, and efficient API management</p>
+          </div>
         </div>
       </div>
     </div>
