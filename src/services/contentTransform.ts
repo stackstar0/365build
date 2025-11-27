@@ -1,6 +1,5 @@
 import { Blog } from '../types';
 
-// English blog content to replace the Lorem Ipsum content
 const englishBlogContent: { [key: number]: { title: string; body: string } } = {
   1: {
     title: "Getting Started with React Development",
@@ -64,7 +63,6 @@ const englishBlogContent: { [key: number]: { title: string; body: string } } = {
   }
 };
 
-// Function to transform blog content to English
 export const transformBlogToEnglish = (blog: Blog): Blog => {
   const englishContent = englishBlogContent[blog.id];
 
@@ -76,7 +74,6 @@ export const transformBlogToEnglish = (blog: Blog): Blog => {
     };
   }
 
-  // For blogs not in our predefined list, create generic English content
   const genericTitles = [
     "Web Development Best Practices",
     "Modern Frontend Technologies",
@@ -123,7 +120,7 @@ export const transformBlogToEnglish = (blog: Blog): Blog => {
   };
 };
 
-// Function to transform an array of blogs to English
+
 export const transformBlogsToEnglish = (blogs: Blog[]): Blog[] => {
   return blogs.map(transformBlogToEnglish);
 };

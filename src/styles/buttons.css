@@ -1,6 +1,4 @@
-/* Enhanced Button Styles for Better Interactivity */
 
-/* Button hover effects */
 @keyframes buttonPulse {
   0% {
     box-shadow: 0 4px 15px rgba(255, 127, 80, 0.3);
@@ -24,7 +22,7 @@
   }
 }
 
-/* Interactive button class */
+
 .interactive-btn {
   position: relative;
   overflow: hidden;
@@ -41,7 +39,7 @@
   transform: translateY(1px) scale(0.98);
 }
 
-/* Ripple effect */
+
 .interactive-btn::after {
   content: '';
   position: absolute;
@@ -61,7 +59,7 @@
   animation: buttonRipple 0.6s linear;
 }
 
-/* Loading state for buttons */
+
 .btn-loading {
   pointer-events: none;
   opacity: 0.7;
@@ -87,7 +85,7 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Disabled button state */
+
 .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -100,7 +98,7 @@
   box-shadow: none !important;
 }
 
-/* Button group styles */
+
 .btn-group {
   display: inline-flex;
   border-radius: 25px;
@@ -124,7 +122,7 @@
   border-right: none;
 }
 
-/* Icon button styles */
+
 .btn-icon {
   width: 48px;
   height: 48px;
@@ -140,7 +138,7 @@
   height: 20px;
 }
 
-/* Floating action button */
+
 .btn-floating {
   position: fixed;
   bottom: 2rem;

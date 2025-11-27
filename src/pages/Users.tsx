@@ -9,7 +9,7 @@ const Users: React.FC = () => {
   const [sortBy, setSortBy] = useState<'name' | 'email' | 'username'>('name');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
-  // Filter and sort users
+
   const filteredAndSortedUsers = useMemo(() => {
     let filtered = users.filter(user =>
       user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

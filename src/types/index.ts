@@ -1,5 +1,3 @@
-// TypeScript interfaces for the Blogs Application
-
 export interface Blog {
   userId: number;
   id: number;

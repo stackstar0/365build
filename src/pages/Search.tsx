@@ -9,7 +9,7 @@ const Search: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchType, setSearchType] = useState<'all' | 'blogs' | 'users'>('all');
 
-  // Create a map of users for quick lookup
+
   const userMap = useMemo(() => {
     const map: { [key: number]: any } = {};
     users.forEach(user => {

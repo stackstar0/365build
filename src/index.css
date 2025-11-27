@@ -27,7 +27,7 @@ code {
     monospace;
 }
 
-/* Typography improvements */
+
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   margin-bottom: 0.5em;
@@ -47,7 +47,7 @@ a:hover {
   color: #764ba2;
 }
 
-/* Modern animations */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -91,7 +91,7 @@ a:hover {
   }
 }
 
-/* Enhanced scrollbar styling */
+
 ::-webkit-scrollbar {
   width: 12px;
 }
@@ -113,7 +113,7 @@ a:hover {
   background-clip: content-box;
 }
 
-/* Glass morphism utility class */
+
 .glass {
   background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(20px);
@@ -122,7 +122,7 @@ a:hover {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
-/* Gradient text utility */
+
 .gradient-text {
   background: linear-gradient(135deg, #ff7f50 0%, #ffa726 50%, #ffb74d 100%);
   -webkit-background-clip: text;
@@ -130,7 +130,7 @@ a:hover {
   background-clip: text;
 }
 
-/* Button utilities */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -172,7 +172,7 @@ a:hover {
   transform: translateY(-1px);
 }
 
-/* Animation utilities */
+
 .fade-in {
   animation: fadeIn 0.8s ease-out;
 }
