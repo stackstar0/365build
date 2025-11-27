@@ -64,6 +64,10 @@ class ApiService {
     const blog = await this.fetchData<Blog>(`${BASE_URL}/posts/${blogId}`);
     return transformBlogToEnglish(blog);
   }
+
+  async getAllComments(): Promise<Comment[]> {
+    return this.fetchData<Comment[]>(`${BASE_URL}/comments`);
+  }
 }
 
 export const apiService = new ApiService();

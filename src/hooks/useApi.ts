@@ -131,3 +131,29 @@ export const useBlogComments = (blogId: number) => {
 
   return { comments, loading, error };
 };
+
+export const useComments = () => {
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await apiService.getAllComments();
+        setComments(data);
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Failed to fetch comments';
+        setError(`Error loading comments: ${errorMessage}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchComments();
+  }, []);
+
+  return { comments, loading, error };
+};

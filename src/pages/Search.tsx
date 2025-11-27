@@ -1,13 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { useBlogs, useUsers } from '../hooks/useApi';
+import { useBlogs, useUsers, useComments } from '../hooks/useApi';
 import './Search.css';
 
 const Search: React.FC = () => {
   const { blogs, loading: blogsLoading } = useBlogs();
   const { users, loading: usersLoading } = useUsers();
+  const { comments, loading: commentsLoading } = useComments();
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchType, setSearchType] = useState<'all' | 'blogs' | 'users'>('all');
+  const [searchType, setSearchType] = useState<'all' | 'blogs' | 'users' | 'comments'>('all');
 
 
   const userMap = useMemo(() => {
@@ -18,10 +19,18 @@ const Search: React.FC = () => {
     return map;
   }, [users]);
 
+  const blogMap = useMemo(() => {
+    const map: { [key: number]: any } = {};
+    blogs.forEach(blog => {
+      map[blog.id] = blog;
+    });
+    return map;
+  }, [blogs]);
+
   // Search results
   const searchResults = useMemo(() => {
     if (!searchQuery.trim()) {
-      return { blogs: [], users: [] };
+      return { blogs: [], users: [], comments: [] };
     }
 
     const query = searchQuery.toLowerCase();
@@ -41,10 +50,18 @@ const Search: React.FC = () => {
       (user.company?.name && user.company.name.toLowerCase().includes(query))
     );
 
-    return { blogs: matchedBlogs, users: matchedUsers };
-  }, [searchQuery, blogs, users, userMap]);
+    const matchedComments = comments.filter(comment =>
+      comment.name.toLowerCase().includes(query) ||
+      comment.body.toLowerCase().includes(query) ||
+      comment.email.toLowerCase().includes(query) ||
+      blogMap[comment.postId]?.title.toLowerCase().includes(query) ||
+      userMap[blogMap[comment.postId]?.userId]?.name.toLowerCase().includes(query)
+    );
 
-  const loading = blogsLoading || usersLoading;
+    return { blogs: matchedBlogs, users: matchedUsers, comments: matchedComments };
+  }, [searchQuery, blogs, users, comments, userMap, blogMap]);
+
+  const loading = blogsLoading || usersLoading || commentsLoading;
 
   const renderBlogResults = () => {
     if (searchType !== 'all' && searchType !== 'blogs') return null;
@@ -124,6 +141,65 @@ const Search: React.FC = () => {
     );
   };
 
+  const renderCommentResults = () => {
+    if (searchType !== 'all' && searchType !== 'comments') return null;
+
+    return (
+      <div className="search-section">
+        <h3>Comments ({searchResults.comments.length})</h3>
+        {searchResults.comments.length > 0 ? (
+          <div className="results-grid">
+            {searchResults.comments.map((comment) => {
+              const relatedBlog = blogMap[comment.postId];
+              const commentAuthorUser = userMap[relatedBlog?.userId];
+
+              return (
+                <div key={comment.id} className="result-card comment-result">
+                  <div className="comment-result-header">
+                    <span className="result-type">Comment #{comment.id}</span>
+                    <div className="comment-context">
+                      {relatedBlog && (
+                        <Link to={`/blogs/${comment.postId}`} className="related-blog">
+                          On: {relatedBlog.title.length > 40
+                            ? `${relatedBlog.title.substring(0, 40)}...`
+                            : relatedBlog.title}
+                        </Link>
+                      )}
+                      {commentAuthorUser && (
+                        <Link to={`/users/${commentAuthorUser.id}`} className="blog-author">
+                          Blog by {commentAuthorUser.name}
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                  <div className="comment-author-info">
+                    <h4 className="comment-name">{comment.name}</h4>
+                    <span className="comment-email">{comment.email}</span>
+                  </div>
+                  <p className="result-excerpt">
+                    {comment.body.length > 150
+                      ? `${comment.body.substring(0, 150)}...`
+                      : comment.body
+                    }
+                  </p>
+                  <div className="comment-actions">
+                    {relatedBlog && (
+                      <Link to={`/blogs/${comment.postId}`} className="result-link">
+                        View Blog →
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : searchQuery.trim() && (
+          <p className="no-results">No comments found matching your search.</p>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="search-container">
       <div className="search-header">
@@ -181,6 +257,12 @@ const Search: React.FC = () => {
             >
               Users
             </button>
+            <button
+              className={`filter-button ${searchType === 'comments' ? 'active' : ''}`}
+              onClick={() => setSearchType('comments')}
+            >
+              Comments
+            </button>
           </div>
         </div>
       </div>
@@ -199,6 +281,7 @@ const Search: React.FC = () => {
                   <ul>
                     <li>Search by blog titles, content, or author names</li>
                     <li>Find users by name, username, email, or company</li>
+                    <li>Search comments by content, commenter name, or related blog</li>
                     <li>Use specific keywords for better results</li>
                     <li>Filter results by type using the buttons above</li>
                   </ul>
@@ -208,13 +291,14 @@ const Search: React.FC = () => {
           ) : (
             <div className="results-container">
               <div className="results-summary">
-                Found {searchResults.blogs.length} blog{searchResults.blogs.length !== 1 ? 's' : ''} and {searchResults.users.length} user{searchResults.users.length !== 1 ? 's' : ''} for "{searchQuery}"
+                Found {searchResults.blogs.length} blog{searchResults.blogs.length !== 1 ? 's' : ''}, {searchResults.users.length} user{searchResults.users.length !== 1 ? 's' : ''}, and {searchResults.comments.length} comment{searchResults.comments.length !== 1 ? 's' : ''} for "{searchQuery}"
               </div>
 
               {renderBlogResults()}
               {renderUserResults()}
+              {renderCommentResults()}
 
-              {searchResults.blogs.length === 0 && searchResults.users.length === 0 && (
+              {searchResults.blogs.length === 0 && searchResults.users.length === 0 && searchResults.comments.length === 0 && (
                 <div className="no-overall-results">
                   <h3>No results found</h3>
                   <p>Try adjusting your search terms or browse our <Link to="/blogs">blogs</Link> and <Link to="/users">users</Link> directly.</p>
